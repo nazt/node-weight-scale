@@ -7,7 +7,6 @@
  * For more information on using Sails with Sockets, check out:
  * http://sailsjs.org/#documentation
  */
-var prettyjson = require('prettyjson');
 
 
 module.exports.sockets = {
