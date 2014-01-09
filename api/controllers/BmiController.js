@@ -36,17 +36,19 @@ module.exports = {
      ret = { }
     
     var do_in_serial = function () {
-      serial_openned = true
       console.log('do in serial ja')
       serialPort.on('data', function(data) {
         console.log('data received: ' + data);
         var h = parseInt(data.toString(), 10)
-        sails.io.sockets.emit('height', { height: 300})
+        sails.io.sockets.emit('height', { height: h})
       });
     }
     console.log('gogo')
     if (!serial_openned) {
       serialPort.open(do_in_serial)
+    }
+    else {
+      serial_openned = true
     }
 
     // serialport.list(function (err, ports) {
