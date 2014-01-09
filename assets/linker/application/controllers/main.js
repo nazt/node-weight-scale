@@ -11,6 +11,13 @@
           $socket.on('connectedUsers', function(data) {
             $scope.connectedUsers = data;
           })
+
+          $socket.on('height', function (data) {
+            $scope['height'] = data['height']
+          })
+
+          
+          // socket.get('/bmi/read')
           
           $scope.foo = "booyah";
         }
