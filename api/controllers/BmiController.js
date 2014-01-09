@@ -16,10 +16,13 @@
  */
 
 var _ = require('underscore')
+var median = require('filters').median;
+
 var serialport = require("serialport")
 var SerialPort = serialport.SerialPort;
 var serialPort = new SerialPort("/dev/ttyACM0", {
-     baudrate: 9600
+     baudrate: 9600,
+     parser: serialport.parsers.readline("\r\n") 
 }, false);
 
 var serial_openned = false
@@ -33,16 +36,37 @@ module.exports = {
    *    `/bmi/read`
    */
    read: function (req, res) {
+     console.log("DO READ");
      ret = { }
+    var arr = []
     
     var do_in_serial = function () {
       console.log('do in serial ja')
       serialPort.on('data', function(data) {
-        console.log('data received: ' + data);
         var h = parseInt(data.toString(), 10)
-        sails.io.sockets.emit('height', { height: h})
+        var sum;
+
+        console.log('data received: ' + data);
+
+        //arr = arr.reverse().splice(0, 4)
+
+        arr.push(h)
+
+        if (_(arr).size() > 5) {
+          arr = median(arr)
+
+          console.log(arr)
+          sum = _.reduce(arr, function(memo, num){ return memo + num; }, 0);
+
+          sails.io.sockets.emit('height', { height: 206-Math.round(sum/_(arr).size()) })
+
+          arr = []
+        } 
+        
+ 
       });
     }
+
     console.log('gogo')
     if (!serial_openned) {
       serialPort.open(do_in_serial)
@@ -55,7 +79,6 @@ module.exports = {
     //   console.log(ports)
     // });
 
-console.log(serialPort)
 
      // Rfid.create({card_id: req.params.id }).done(function (err, msg) {
      //   if (err) {
