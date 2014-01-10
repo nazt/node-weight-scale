@@ -17,7 +17,7 @@
           })
 
           
-          // socket.get('/bmi/read')
+          socket.get('/bmi/read')
           
           $scope.foo = "booyah";
         }
