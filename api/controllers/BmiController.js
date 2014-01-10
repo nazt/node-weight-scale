@@ -92,6 +92,18 @@ module.exports = {
      return res.json({result: ret});
   },
 
+  /**
+   * Action blueprints:
+   *    `/bmi/weight`
+   */
+  weight: function (req, res) {
+    var weight = req.param('id');
+    var ret = {};
+    if (!isNaN(parseInt(weight))) {
+      sails.io.sockets.emit('weight', { weight: weight })
+    }
+    return res.json({result: ret});
+  },
 
 
 

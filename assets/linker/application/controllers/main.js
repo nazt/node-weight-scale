@@ -16,8 +16,12 @@
             $scope['height'] = data['height']
           })
 
-          
+          $socket.on('weight', function (data) {
+            $scope['weight'] = data['weight']
+          })
+
           socket.get('/bmi/read')
+          socket.get('/bmi/weight')
           
           $scope.foo = "booyah";
         }
