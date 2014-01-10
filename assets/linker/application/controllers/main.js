@@ -14,10 +14,13 @@
 
           $socket.on('height', function (data) {
             $scope['height'] = data['height']
+            $scope['bmi'] = parseInt($scope['weight']) / Math.pow(parseInt($scope['height'] / 100, 2);
           })
 
           $socket.on('weight', function (data) {
             $scope['weight'] = data['weight']
+            console.log($scope['weight']);
+            $scope['bmi'] = parseInt($scope['weight']) / Math.pow(parseInt($scope['height'] / 100, 2);
           })
 
           socket.get('/bmi/read')
