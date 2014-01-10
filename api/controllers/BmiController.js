@@ -58,7 +58,7 @@ module.exports = {
           console.log(arr)
           sum = _.reduce(arr, function(memo, num){ return memo + num; }, 0);
 
-          sails.io.sockets.emit('height', { height: 206-Math.round(sum/_(arr).size()) })
+          sails.io.sockets.emit('height', { height: 203-Math.round(sum/_(arr).size()) })
 
           arr = []
         } 
